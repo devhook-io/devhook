@@ -13,8 +13,6 @@ defmodule DevhookWeb.Router do
     pipe_through :browser
 
     post "/test", TestController, :index
-
-    live "/", PageLive, :index
   end
 
   scope "/api", DevhookWeb do
