@@ -52,7 +52,9 @@ defmodule DevhookWeb.Endpoint do
   plug Plug.Session, @session_options
 
   if Mix.env() != :prod do
-    plug Corsica, origins: "http://localhost:3000", allow_headers: :all
+    plug Corsica,
+      origins: ["http://localhost:3000", "https://app.devhook.io"],
+      allow_headers: :all
   end
 
   plug DevhookWeb.Router
