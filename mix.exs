@@ -20,7 +20,7 @@ defmodule Devhook.MixProject do
   def application do
     [
       mod: {Devhook.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:simple_token_authentication, :logger, :runtime_tools]
     ]
   end
 
@@ -50,7 +50,8 @@ defmodule Devhook.MixProject do
       {:guardian, "~> 2.1"},
       {:redix, "~> 1.1"},
       {:cors_plug, "~> 2.0"},
-      {:corsica, "~> 1.1"}
+      {:corsica, "~> 1.1"},
+      {:simple_token_authentication, "~> 0.6.0"}
     ]
   end
 
