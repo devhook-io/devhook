@@ -12,6 +12,7 @@ use Mix.Config
 config :devhook, DevhookWeb.Endpoint,
   url: [host: "devhook.gigalixirapp.com", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json"
+  check_origin: ["//*.devhook.io"]
 
 # Do not print debug messages in production
 config :logger, level: :info
