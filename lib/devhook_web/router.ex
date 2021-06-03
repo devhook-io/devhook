@@ -6,7 +6,7 @@ defmodule DevhookWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
-    plug DevhookWeb.Pipelines.Guardian
+    plug SimpleTokenAuthentication
   end
 
   scope "/", DevhookWeb do
@@ -18,7 +18,7 @@ defmodule DevhookWeb.Router do
   scope "/api", DevhookWeb do
     pipe_through :api
 
-    get "/webhooks", Api.WebhooksController, :get_webhooks
+    post "/user", Api.UserController, :create_user
   end
 
   scope "/webhooks", DevhookWeb do

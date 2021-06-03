@@ -2,7 +2,7 @@ defmodule Devhook.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:email, :first_name, :last_name]}
+  @derive {Jason.Encoder, only: [:email, :first_name, :last_name, :uid]}
   @primary_key {:uid, :binary_id, autogenerate: true}
 
   schema "users" do
