@@ -13,4 +13,19 @@ defmodule DevhookWeb.UserChannel do
       {:error, "not authorized"}
     end
   end
+
+  def handle_in("webhooks:new", payload, socket) do
+    payload
+    |> Map.put("user_uid", socket.assigns.current_user.uid)
+    |> Webhooks.create_webhook()
+    |> case do
+      {:ok, _} ->
+        webhooks = Webhooks.get_all_auth_webhooks(socket.assigns.current_user.uid)
+        socket = assign(socket, :user, socket.assigns.current_user)
+        {:reply, {:ok, webhooks}, socket}
+
+      {:error, _reason} ->
+        {:reply, {:error, "Error creating webhook"}, socket}
+    end
+  end
 end

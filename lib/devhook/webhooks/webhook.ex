@@ -24,7 +24,7 @@ defmodule Devhook.Webhooks.Webhook do
   @doc false
   def changeset(webhook, attrs) do
     webhook
-    |> cast(attrs, [:human_name, :allowed_origins, :disabled, :destination])
+    |> cast(attrs, [:human_name, :allowed_origins, :disabled, :destination, :user_uid])
     |> validate_required([:human_name, :destination])
   end
 end

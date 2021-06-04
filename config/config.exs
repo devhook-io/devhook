@@ -23,7 +23,7 @@ config :devhook, DevhookWeb.Guardian,
   verify_module: Guardian.JWT,
   issuer: "https://devhook.io",
   verify_issuer: false,
-  secret_key: "7KHGXIDoqOrXdJPo1h6R1lzL15lS7Q1P"
+  secret_key: System.get_env("AUTH0_SECRET")
 
 # Configures Elixir's Logger
 config :logger, :console,
