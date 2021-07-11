@@ -62,6 +62,10 @@ defmodule Devhook.Webhooks do
     update_webhook(webhook, %{disabled: bool})
   end
 
+  def get_active_webhook(webhook_uid) do
+    Repo.get_by(Webhook, uid: webhook_uid, disabled: false)
+  end
+
   def get_active_auth_webhook(webhook_uid, user_uid) do
     Repo.get_by(Webhook, user_uid: user_uid, uid: webhook_uid, disabled: false)
   end

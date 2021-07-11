@@ -6,8 +6,9 @@ defmodule Devhook.Repo.Migrations.CreateWebhooks do
       add(:uid, :uuid, null: false)
       add :human_name, :string, null: false
       add :allowed_origins, {:array, :string}
-      add :destination, :string,  null: false
+      add :destination, :string, null: false
       add :disabled, :boolean, default: true
+
       add(
         :user_uid,
         references(:users, column: :uid, type: :uuid, on_delete: :delete_all),

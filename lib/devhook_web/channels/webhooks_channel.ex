@@ -5,8 +5,6 @@ defmodule DevhookWeb.WebhooksChannel do
   alias Devhook.Webhooks.Webhook
 
   def join("webhooks:" <> webhook_uid, _params, socket) do
-    IO.inspect(socket.assigns)
-
     case Webhooks.get_auth_webhook(webhook_uid, socket.assigns.current_user.uid) do
       %Webhook{} = webhook ->
         socket = assign(socket, :webhook, webhook)
@@ -19,8 +17,7 @@ defmodule DevhookWeb.WebhooksChannel do
     end
   end
 
-  def leave(socket, topic) do
-    IO.inspect("leaving channel")
+  def leave(socket, _topic) do
     socket
   end
 

@@ -11,8 +11,6 @@ defmodule DevhookWeb.Api.WebhooksController do
   end
 
   def options(conn, _params) do
-    IO.inspect("options")
-
     conn
     |> send_resp(200, "ok")
   end

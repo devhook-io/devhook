@@ -6,8 +6,18 @@ defmodule Devhook.UsersTest do
   describe "users" do
     alias Devhook.Users.User
 
-    @valid_attrs %{auth0_xid: "some auth0_xid", email: "some email", first_name: "some first_name", last_name: "some last_name"}
-    @update_attrs %{auth0_xid: "some updated auth0_xid", email: "some updated email", first_name: "some updated first_name", last_name: "some updated last_name"}
+    @valid_attrs %{
+      auth0_xid: "some auth0_xid",
+      email: "some email",
+      first_name: "some first_name",
+      last_name: "some last_name"
+    }
+    @update_attrs %{
+      auth0_xid: "some updated auth0_xid",
+      email: "some updated email",
+      first_name: "some updated first_name",
+      last_name: "some updated last_name"
+    }
     @invalid_attrs %{auth0_xid: nil, email: nil, first_name: nil, last_name: nil}
 
     def user_fixture(attrs \\ %{}) do

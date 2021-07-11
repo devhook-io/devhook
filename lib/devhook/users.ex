@@ -10,6 +10,11 @@ defmodule Devhook.Users do
 
   def get_user_by_auth0_xid!(xid), do: Repo.get_by(User, auth0_xid: xid)
 
+  def increase_request_count(user_uid) do
+    from(u in User, update: [inc: [request_count: 1]], where: u.uid == ^user_uid)
+    |> Repo.update_all([])
+  end
+
   @doc """
   Returns the list of users.
 

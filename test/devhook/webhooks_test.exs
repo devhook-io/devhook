@@ -6,8 +6,16 @@ defmodule Devhook.WebhooksTest do
   describe "webhooks" do
     alias Devhook.Webhooks.Webhook
 
-    @valid_attrs %{allowed_origins: [], destination: "some destination", human_name: "some human_name"}
-    @update_attrs %{allowed_origins: [], destination: "some updated destination", human_name: "some updated human_name"}
+    @valid_attrs %{
+      allowed_origins: [],
+      destination: "some destination",
+      human_name: "some human_name"
+    }
+    @update_attrs %{
+      allowed_origins: [],
+      destination: "some updated destination",
+      human_name: "some updated human_name"
+    }
     @invalid_attrs %{allowed_origins: nil, destination: nil, human_name: nil}
 
     def webhook_fixture(attrs \\ %{}) do

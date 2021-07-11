@@ -22,7 +22,7 @@ defmodule DevhookWeb.Router do
   end
 
   scope "/webhooks", DevhookWeb do
-    post "/:user_uid/:webhook_uid", WebhookController, :post_webhook
+    post "/:webhook_uid", WebhookController, :post_webhook
   end
 
   # Other scopes may use custom stacks.

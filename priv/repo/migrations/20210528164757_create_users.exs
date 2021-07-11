@@ -4,10 +4,10 @@ defmodule Devhook.Repo.Migrations.CreateUsers do
   def change do
     create table(:users, primary_key: false) do
       add(:uid, :uuid, null: false)
-      add :email, :string,  null: false
+      add :email, :string, null: false
       add :first_name, :string
       add :last_name, :string
-      add :auth0_xid, :string,  null: false
+      add :auth0_xid, :string, null: false
 
       timestamps()
     end
@@ -15,6 +15,5 @@ defmodule Devhook.Repo.Migrations.CreateUsers do
     create_if_not_exists unique_index(:users, [:uid])
     create_if_not_exists unique_index(:users, [:email])
     create_if_not_exists unique_index(:users, [:auth0_xid])
-
   end
 end

@@ -2,7 +2,7 @@ defmodule Devhook.Users.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  @derive {Jason.Encoder, only: [:email, :first_name, :last_name, :uid]}
+  @derive {Jason.Encoder, only: [:email, :first_name, :last_name, :uid, :request_count]}
   @primary_key {:uid, :binary_id, autogenerate: true}
 
   schema "users" do
@@ -10,6 +10,7 @@ defmodule Devhook.Users.User do
     field :email, :string
     field :first_name, :string
     field :last_name, :string
+    field :request_count, :integer, default: 0
 
     timestamps()
   end
@@ -17,7 +18,7 @@ defmodule Devhook.Users.User do
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :auth0_xid])
+    |> cast(attrs, [:email, :first_name, :last_name, :auth0_xid, :request_count])
     |> validate_required([:email, :auth0_xid])
     |> unique_constraint([:email])
   end
