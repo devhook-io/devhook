@@ -7,13 +7,17 @@ defmodule DevhookWeb.WebhookController do
 
   @spec post_webhook(Plug.Conn.t(), map) :: Plug.Conn.t()
   def post_webhook(conn, %{"webhook_uid" => webhook_uid}) do
-    case Webhooks.get_active_webhook(webhook_uid) do
-      %Webhook{} = webhook ->
-        Endpoint.broadcast("webhooks:" <> webhook_uid, "event:new", build_payload(conn))
-        Users.increase_request_count(webhook.user_uid)
+    with %Webhook{} = webhook <- Webhooks.get_active_webhook(webhook_uid),
+         :ok <- Users.validate_request_count(webhook.user_uid),
+         {_, [count]} <- Users.increase_request_count(webhook.user_uid) do
+      Endpoint.broadcast("webhooks:" <> webhook_uid, "event:new", build_payload(conn, count))
 
+      conn
+      |> send_resp(200, "ok")
+    else
+      :limit_reached ->
         conn
-        |> send_resp(200, "ok")
+        |> send_resp(429, "Request limit reached. Please upgrade your account.")
 
       nil ->
         conn
@@ -21,12 +25,12 @@ defmodule DevhookWeb.WebhookController do
     end
   end
 
-  defp build_payload(conn) do
+  defp build_payload(conn, count) do
     %{
       cookies: conn.req_cookies,
       headers: build_headers(conn.req_headers),
       body: conn.body_params,
-      metadata: build_metadata(conn)
+      metadata: build_metadata(conn, count)
     }
   end
 
@@ -58,12 +62,13 @@ defmodule DevhookWeb.WebhookController do
     ])
   end
 
-  defp build_metadata(conn) do
+  defp build_metadata(conn, count) do
     %{
       timestamp: DateTime.utc_now(),
       status: 200,
       method: conn.method,
-      request_ip: build_remote_ip(conn.remote_ip)
+      request_ip: build_remote_ip(conn.remote_ip),
+      request_count: count
     }
   end
 

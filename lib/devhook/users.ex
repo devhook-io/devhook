@@ -11,7 +11,11 @@ defmodule Devhook.Users do
   def get_user_by_auth0_xid!(xid), do: Repo.get_by(User, auth0_xid: xid)
 
   def increase_request_count(user_uid) do
-    from(u in User, update: [inc: [request_count: 1]], where: u.uid == ^user_uid)
+    from(u in User,
+      update: [inc: [request_count: 1]],
+      where: u.uid == ^user_uid,
+      select: u.request_count
+    )
     |> Repo.update_all([])
   end
 
@@ -107,5 +111,14 @@ defmodule Devhook.Users do
   """
   def change_user(%User{} = user, attrs \\ %{}) do
     User.changeset(user, attrs)
+  end
+
+  def validate_request_count(uid) do
+    user = get_user!(uid)
+
+    case (user.payment_tier == "free" && user.request_count < 1000) || user.payment_tier != "free" do
+      true -> :ok
+      false -> :limit_reached
+    end
   end
 end

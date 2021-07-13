@@ -11,7 +11,6 @@ defmodule DevhookWeb.Guardian do
   end
 
   def resource_from_claims(%{"sub" => auth0_xid}) do
-    IO.inspect(auth0_xid)
     [_, xid] = String.split(auth0_xid, "|")
 
     case Users.get_user_by_auth0_xid!(xid) do

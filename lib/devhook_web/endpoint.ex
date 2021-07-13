@@ -53,7 +53,7 @@ defmodule DevhookWeb.Endpoint do
 
   if Mix.env() != :prod do
     plug Corsica,
-      origins: ["http://localhost:3000"],
+      origins: ["http://localhost:3000", "https://app.devhook.io"],
       allow_headers: :all
   end
 
