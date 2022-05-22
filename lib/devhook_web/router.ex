@@ -4,6 +4,10 @@ defmodule DevhookWeb.Router do
   pipeline :browser do
   end
 
+  pipeline :jwt do
+    plug DevhookWeb.Pipelines.Guardian
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
     plug SimpleTokenAuthentication
@@ -16,9 +20,24 @@ defmodule DevhookWeb.Router do
   end
 
   scope "/api", DevhookWeb do
+    scope "/webhooks" do
+      pipe_through :jwt
+      get "/", Api.WebhooksController, :get_webhooks
+    end
+
     pipe_through :api
 
     post "/user", Api.UserController, :create_user
+  end
+
+  scope "/subscription", DevhookWeb do
+    pipe_through :jwt
+
+    post "/new", Api.Subscription.NewController, :create_subscription
+  end
+
+  scope "/stripe", DevhookWeb do
+    post "/webhook", Stripe.WebhookController, :handle_webhook
   end
 
   scope "/webhooks", DevhookWeb do

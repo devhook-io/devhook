@@ -3,7 +3,7 @@ defmodule Devhook.Repo.Migrations.AddPaymentTierColumn do
 
   def change do
     alter table("users") do
-      add :payment_tier, :string, default: "free"
+      add :subscription_name, :string, default: "free"
     end
   end
 end

@@ -2,6 +2,7 @@ defmodule Devhook.UsersTest do
   use Devhook.DataCase
 
   alias Devhook.Users
+  alias Ecto.UUID
 
   describe "users" do
     alias Devhook.Users.User
@@ -10,7 +11,8 @@ defmodule Devhook.UsersTest do
       auth0_xid: "some auth0_xid",
       email: "some email",
       first_name: "some first_name",
-      last_name: "some last_name"
+      last_name: "some last_name",
+      uid: UUID.generate()
     }
     @update_attrs %{
       auth0_xid: "some updated auth0_xid",

@@ -18,6 +18,10 @@ config :devhook, DevhookWeb.Endpoint,
   pubsub_server: Devhook.PubSub,
   live_view: [signing_salt: "khh8gQpE"]
 
+config :stripity_stripe,
+  api_key: System.get_env("STRIPE_SECRET"),
+  signing_secret: System.get_env("STRIPE_SIGNING_SECRET")
+
 config :devhook, DevhookWeb.Guardian,
   allowed_algos: ["HS256"],
   verify_module: Guardian.JWT,
@@ -35,6 +39,14 @@ config :simple_token_authentication,
 
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
+
+config :esbuild,
+  version: "0.12.18",
+  default: [
+    args: ~w(js/app.js --bundle --target=es2016 --outdir=../priv/static/assets),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

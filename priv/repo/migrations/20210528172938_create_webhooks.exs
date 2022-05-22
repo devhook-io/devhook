@@ -2,7 +2,7 @@ defmodule Devhook.Repo.Migrations.CreateWebhooks do
   use Ecto.Migration
 
   def change do
-    create table(:webhooks, primary_key: false) do
+    create table(:webhooks) do
       add(:uid, :uuid, null: false)
       add :human_name, :string, null: false
       add :allowed_origins, {:array, :string}

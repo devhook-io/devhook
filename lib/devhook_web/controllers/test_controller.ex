@@ -1,7 +1,7 @@
 defmodule DevhookWeb.TestController do
   use DevhookWeb, :controller
 
-  def index(conn, params) do
+  def index(conn, _params) do
     conn
     |> send_resp(200, "ok")
   end

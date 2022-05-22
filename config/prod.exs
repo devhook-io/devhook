@@ -10,8 +10,9 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :devhook, DevhookWeb.Endpoint,
-  url: [host: "devhook.gigalixirapp.com", port: 80],
+  url: [host: "devhook.fly.dev"],
   cache_static_manifest: "priv/static/cache_manifest.json",
+  secret_key_base: "3AC7YOLbv28LoQCk9JtbGzpTpI1z6g7eJGqGkEvtF62/AkF5VSnWVw+DA9AdCEPb",
   check_origin: ["//*.devhook.io"]
 
 # Do not print debug messages in production
@@ -53,7 +54,3 @@ config :simple_token_authentication,
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
-
-# Finally import the config/prod.secret.exs which loads secrets
-# and configuration from environment variables.
-import_config "prod.secret.exs"

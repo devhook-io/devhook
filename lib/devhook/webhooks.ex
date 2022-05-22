@@ -38,7 +38,7 @@ defmodule Devhook.Webhooks do
   def get_webhook!(id), do: Repo.get!(Webhook, id)
 
   def get_auth_webhook(webhook_uid, user_uid),
-    do: Repo.get_by(Webhook, uid: webhook_uid, user_uid: user_uid)
+    do: Repo.get_by(Webhook, uid: webhook_uid, user_uid: user_uid) |> Repo.preload(:user)
 
   @doc """
   Creates a webhook.
@@ -64,6 +64,7 @@ defmodule Devhook.Webhooks do
 
   def get_active_webhook(webhook_uid) do
     Repo.get_by(Webhook, uid: webhook_uid, disabled: false)
+    |> Repo.preload(:user)
   end
 
   def get_active_auth_webhook(webhook_uid, user_uid) do
@@ -72,6 +73,15 @@ defmodule Devhook.Webhooks do
 
   def get_all_auth_webhooks(user_uid) do
     Webhook |> where(user_uid: ^user_uid) |> Repo.all()
+  end
+
+  def get_open_webhook(webhook_uid) do
+    from(w in Webhook,
+      where: w.uid == ^webhook_uid,
+      where: w.always_accept == true or w.disabled == false,
+      preload: :user
+    )
+    |> Repo.one()
   end
 
   @doc """

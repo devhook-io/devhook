@@ -21,7 +21,6 @@ defmodule DevhookWeb.ChannelCase do
     quote do
       # Import conveniences for testing with channels
       import Phoenix.ChannelTest
-      import DevhookWeb.ChannelCase
 
       # The default endpoint for testing
       @endpoint DevhookWeb.Endpoint

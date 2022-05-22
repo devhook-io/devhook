@@ -1,7 +1,10 @@
 defmodule Devhook.WebhooksTest do
   use Devhook.DataCase
 
+  import Devhook.Factory
+
   alias Devhook.Webhooks
+  alias Ecto.UUID
 
   describe "webhooks" do
     alias Devhook.Webhooks.Webhook
@@ -9,12 +12,15 @@ defmodule Devhook.WebhooksTest do
     @valid_attrs %{
       allowed_origins: [],
       destination: "some destination",
-      human_name: "some human_name"
+      human_name: "some human_name",
+      uid: UUID.generate(),
+      user_uid: UUID.generate()
     }
     @update_attrs %{
       allowed_origins: [],
       destination: "some updated destination",
-      human_name: "some updated human_name"
+      human_name: "some updated human_name",
+      uid: UUID.generate()
     }
     @invalid_attrs %{allowed_origins: nil, destination: nil, human_name: nil}
 
@@ -28,7 +34,7 @@ defmodule Devhook.WebhooksTest do
     end
 
     test "list_webhooks/0 returns all webhooks" do
-      webhook = webhook_fixture()
+      webhook = insert(:webhook)
       assert Webhooks.list_webhooks() == [webhook]
     end
 

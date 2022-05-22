@@ -17,7 +17,9 @@ defmodule Devhook.Application do
       DevhookWeb.Endpoint,
       # Start a worker by calling: Devhook.Worker.start_link(arg)
       # {Devhook.Worker, arg}
-      {Redix, name: :redix}
+      {Redix, name: :redix},
+      # Cache for webhooks that accept payloads either by being on a Pro account or monitoring.
+      {Cachex, name: :open_webhooks}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

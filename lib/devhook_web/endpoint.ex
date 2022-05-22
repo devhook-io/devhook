@@ -24,7 +24,7 @@ defmodule DevhookWeb.Endpoint do
     at: "/",
     from: :devhook,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(assets css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -43,9 +43,10 @@ defmodule DevhookWeb.Endpoint do
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+    parsers: [DevhookWeb.Stripe.WebhookParser, :urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
+    json_decoder: Phoenix.json_library(),
+    body_reader: {DevhookWeb.BodyReader, :read_body, []}
 
   plug Plug.MethodOverride
   plug Plug.Head

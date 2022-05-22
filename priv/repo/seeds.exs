@@ -7,16 +7,15 @@
 alias Devhook.Repo
 alias Devhook.Users.User
 alias Devhook.Webhooks.Webhook
-alias Ecto.UUID
 
-user_uid = UUID.generate()
 #
 #     Devhook.Repo.insert!(%Devhook.SomeSchema{})
 Repo.insert!(%User{
   first_name: "Sutton",
-  uid: user_uid,
+  uid: "3951eeb2-8582-4fbb-8d04-e5b8f0a888ae",
   last_name: "May",
   email: "suttonmay5@gmail.com",
+  stripe_customer_id: "cus_Jv5SgtbWs7dZkb",
   auth0_xid: "60b1336885bfb30069f60253"
 })
 
@@ -25,7 +24,7 @@ Repo.insert!(%Webhook{
   allowed_origins: [],
   destination: "http://localhost:4000/test",
   disabled: false,
-  user_uid: user_uid
+  user_uid: "3951eeb2-8582-4fbb-8d04-e5b8f0a888ae"
 })
 
 #
