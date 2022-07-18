@@ -24,25 +24,32 @@ defmodule DevhookWeb.Channels.UserChannelTest do
 
     test "successfully joins the user channel", %{user: user} do
       {:ok, response, _} =
-      socket(UserSocket, "user:#{user.uid}", %{current_user: user})
-      |> subscribe_and_join(UserChannel, "user:#{user.uid}", %{})
+        socket(UserSocket, "user:#{user.uid}", %{current_user: user})
+        |> subscribe_and_join(UserChannel, "user:#{user.uid}", %{})
 
       assert response.user.uid == user.uid
     end
 
     test "webhooks:new successfully creates webhook", %{socket: socket, user: user} do
-      ref = push(socket, "webhooks:new", %{"human_name" => "test webhook", "destination" => "http://localhost:4000/test"})
+      ref =
+        push(socket, "webhooks:new", %{
+          "human_name" => "test webhook",
+          "destination" => "http://localhost:4000/test"
+        })
+
       assert_reply ref, :ok, [%{human_name: "test webhook"}]
       assert Webhooks.get_all_auth_webhooks(user.uid)
     end
 
     test "webhooks:update successfully updates webhook", %{socket: socket, user: user} do
       webhook = insert(:webhook, user: user)
+
       params = %{
         "uid" => webhook.uid,
         "destination" => webhook.destination,
         "human_name" => "new name"
       }
+
       ref = push(socket, "webhooks:update", params)
       assert_reply ref, :ok, [updated_webhook]
 

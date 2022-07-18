@@ -62,6 +62,24 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
+  config :devhook, DevhookWeb.Guardian, secret_key: auth0_secret()
+
+  config :stripity_stripe,
+    api_key: stripe_secret(),
+    signing_secret: stripe_signing_secret()
+
+  defp auth0_secret do
+    System.get_env("AUTH0_SECRET")
+  end
+
+  defp stripe_secret do
+    System.get_env("STRIPE_SECRET")
+  end
+
+  defp stripe_signing_secret do
+    System.get_env("STRIPE_SIGNING_SECRET")
+  end
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.

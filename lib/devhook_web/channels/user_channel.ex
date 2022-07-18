@@ -72,10 +72,11 @@ defmodule DevhookWeb.UserChannel do
   end
 
   defp validate_user_payload(payload, user) do
-    {:ok, %{
-      first_name: payload["first_name"] || user.first_name,
-      last_name: payload["last_name"] || user.last_name,
-    }}
+    {:ok,
+     %{
+       first_name: payload["first_name"] || user.first_name,
+       last_name: payload["last_name"] || user.last_name
+     }}
   end
 
   defp validate_webhook_payload(payload, %{subscription_name: :free}) do
@@ -84,7 +85,6 @@ defmodule DevhookWeb.UserChannel do
 
   defp validate_webhook_payload(payload, %{subscription_name: :developer}) do
     DeveloperWebhook.changeset(%DeveloperWebhook{}, payload)
-
   end
 
   defp validate_webhook_payload(payload, %{subscription_name: :professional}) do

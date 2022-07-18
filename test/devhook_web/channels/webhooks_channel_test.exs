@@ -17,8 +17,8 @@ defmodule DevhookWeb.Channels.WebhooksChannelTest do
 
     test "successfully joins the webhooks channel", %{webhook: webhook} do
       {:ok, response, _} =
-      socket(UserSocket, "webhooks:#{webhook.uid}", %{current_user: webhook.user})
-      |> subscribe_and_join(WebhooksChannel, "webhooks:#{webhook.uid}", %{})
+        socket(UserSocket, "webhooks:#{webhook.uid}", %{current_user: webhook.user})
+        |> subscribe_and_join(WebhooksChannel, "webhooks:#{webhook.uid}", %{})
 
       assert response.webhook.uid == webhook.uid
     end

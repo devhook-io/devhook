@@ -24,14 +24,14 @@ defmodule DevhookWeb.Stripe.WebhookHandler do
 
   def handle_event("customer.subscription.created", event) do
     with "active" <- event.data.object.status,
-    %User{} = user <- Users.get_user_by_stripe_customer_id(event.data.object.customer) do
+         %User{} = user <- Users.get_user_by_stripe_customer_id(event.data.object.customer) do
       activate_subscription(user, event)
     end
   end
 
   def handle_event("customer.subscription.updated", event) do
     with "active" <- event.data.object.status,
-    %User{} = user <- Users.get_user_by_stripe_customer_id(event.data.object.customer) do
+         %User{} = user <- Users.get_user_by_stripe_customer_id(event.data.object.customer) do
       activate_subscription(user, event)
     end
   end

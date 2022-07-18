@@ -3,6 +3,7 @@ defmodule DevhookWeb.TestController do
 
   def index(conn, params) do
     IO.inspect(params)
+
     conn
     |> send_resp(200, "ok")
   end
