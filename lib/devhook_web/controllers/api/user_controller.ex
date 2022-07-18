@@ -9,7 +9,9 @@ defmodule DevhookWeb.Api.UserController do
          {:ok, user} <- Users.create_user(params) do
       json(conn, user)
     else
-      {:error, _} -> conn |> send_resp(400, "error creating user")
+      {:error, error} ->
+        IO.inspect(error)
+        conn |> send_resp(400, "error creating user")
     end
   end
 end
