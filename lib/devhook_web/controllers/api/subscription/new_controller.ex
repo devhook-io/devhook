@@ -4,16 +4,14 @@ defmodule DevhookWeb.Api.Subscription.NewController do
   alias Devhook.Users
 
   def create_subscription(conn, %{"priceId" => nil}) do
-    user =
-      conn
-      |> Guardian.Plug.current_resource()
-      |> Users.update_user(%{subscription_name: :free, initial_signup: false})
+    {:ok, user} = Guardian.Plug.current_resource(conn)
+    user = Users.update_user(user, %{subscription_name: :free, initial_signup: false})
 
     json(conn, user)
   end
 
   def create_subscription(conn, params) do
-    user = Guardian.Plug.current_resource(conn)
+    {:ok, user} = Guardian.Plug.current_resource(conn)
 
     payload = %{
       customer: user.stripe_customer_id,
