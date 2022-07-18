@@ -56,6 +56,9 @@ defmodule DevhookWeb.Endpoint do
     plug Corsica,
       origins: ["http://localhost:3000", "https://app.devhook.io"],
       allow_headers: :all
+  else
+    plug Corsica,
+      origins: ["https://app.devhook.io"]
   end
 
   plug DevhookWeb.Router
