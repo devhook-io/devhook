@@ -4,8 +4,8 @@ defmodule DevhookWeb.Api.UserController do
   alias Devhook.Users
 
   def create_user(conn, params) do
-    with {:ok, customer} <- Stripe.Customer.create(%{email: params.email}),
-         params <- Map.put(params, :stripe_customer_id, customer.id),
+    with {:ok, customer} <- Stripe.Customer.create(%{email: params["email"]}),
+         params <- Map.put(params, "stripe_customer_id", customer.id),
          {:ok, user} <- Users.create_user(params) do
       json(conn, user)
     else
