@@ -15,7 +15,9 @@ defmodule DevhookWeb.Stripe.WebhookController do
     end
   end
 
-  def handle_webhook(conn, %{"error" => :unauthenticated}) do
+  def handle_webhook(conn, %{"error" => :unauthenticated} = event) do
+    IO.inspect(event)
+
     conn
     |> put_status(401)
     |> json(%{status: "error"})
