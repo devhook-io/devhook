@@ -29,6 +29,11 @@ if config_env() == :prod do
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
+
+  auth0_secret = System.get_env("AUTH0_SECRET")
+  stripe_secret = System.get_env("STRIPE_SECRET")
+  stripe_signing_secret = System.get_env("STRIPE_SIGNING_SECRET")
+
   config :devhook, Devhook.Repo,
     # ssl: true,
     url: database_url,
@@ -62,23 +67,11 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base
 
-  config :devhook, DevhookWeb.Guardian, secret_key: auth0_secret()
+  config :devhook, DevhookWeb.Guardian, secret_key: auth0_secret
 
   config :stripity_stripe,
-    api_key: stripe_secret(),
-    signing_secret: stripe_signing_secret()
-
-  defp auth0_secret do
-    System.get_env("AUTH0_SECRET")
-  end
-
-  defp stripe_secret do
-    System.get_env("STRIPE_SECRET")
-  end
-
-  defp stripe_signing_secret do
-    System.get_env("STRIPE_SIGNING_SECRET")
-  end
+    api_key: stripe_secret,
+    signing_secret: stripe_signing_secret
 
   # ## Configuring the mailer
   #
