@@ -29,7 +29,6 @@ if config_env() == :prod do
 
   maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
-
   auth0_secret = System.get_env("AUTH0_SECRET")
   stripe_secret = System.get_env("STRIPE_SECRET")
   stripe_signing_secret = System.get_env("STRIPE_SIGNING_SECRET")

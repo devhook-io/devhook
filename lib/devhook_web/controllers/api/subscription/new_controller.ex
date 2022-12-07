@@ -1,4 +1,7 @@
 defmodule DevhookWeb.Api.Subscription.NewController do
+  @moduledoc """
+  This controller handles all new customer signups with Stripe. It will create a subscription for that user.
+  """
   use DevhookWeb, :controller
 
   alias Devhook.Users

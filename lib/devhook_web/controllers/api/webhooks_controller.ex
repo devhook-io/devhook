@@ -1,4 +1,7 @@
 defmodule DevhookWeb.Api.WebhooksController do
+  @moduledoc """
+  API controller for intefacing with webhooks.
+  """
   use DevhookWeb, :controller
 
   alias Devhook.Webhooks

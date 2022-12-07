@@ -1,4 +1,9 @@
 defmodule DevhookWeb.WebhookController do
+  @moduledoc """
+  This controller handles all incoming webhook requests. If the webhook is currently being monitored then it will forward to all listening clients using Sockets.
+  If the webhook is not being monitored, it will reject with a 403 response code.
+  If the webhook is being monitored but the user has hit their request limit for the month then it responds with a 429 error.
+  """
   use DevhookWeb, :controller
   alias DevhookWeb.Endpoint
   alias Devhook.Users
@@ -86,7 +91,7 @@ defmodule DevhookWeb.WebhookController do
   end
 
   defp send_response(conn, _webhook) do
-     send_resp(conn, 200, "")
+    send_resp(conn, 200, "")
   end
 
   defp execute_response(conn, %{uid: uid, disabled: false} = webhook, count) do

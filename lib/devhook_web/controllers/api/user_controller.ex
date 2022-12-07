@@ -1,4 +1,7 @@
 defmodule DevhookWeb.Api.UserController do
+  @moduledoc """
+  This handles the creation of a new user that is triggered from Auth0. We create a stripe user and a DB user.
+  """
   use DevhookWeb, :controller
 
   alias Devhook.Users

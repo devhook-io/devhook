@@ -1,5 +1,7 @@
 # Devhook
 
+Devhook is the backend for the website https://devhook.io. A ngrok-like web application that will take external requests (most commonly webhook events) and forward them to your local dev server so you can do full e2e testing on your machine before pushing to prod.
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
