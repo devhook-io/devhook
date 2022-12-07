@@ -4,7 +4,6 @@ defmodule DevhookWeb.Channels.WebhooksChannelTest do
 
   import Devhook.Factory
 
-  alias Devhook.Webhooks
   alias DevhookWeb.UserSocket
   alias DevhookWeb.WebhooksChannel
 

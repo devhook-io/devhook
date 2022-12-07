@@ -77,7 +77,7 @@ defmodule DevhookWeb.WebhookController do
     "#{one}.#{two}.#{three}.#{four}.#{five}.#{six}.#{seven}.#{eight}"
   end
 
-  defp send_response(conn, %{user: %{subscription_name: "professional"}, response: response}) do
+  defp send_response(conn, %{user: %{subscription_name: :professional}, response: response}) do
     if response == %{} do
       send_resp(conn, 200, "")
     else
@@ -85,7 +85,9 @@ defmodule DevhookWeb.WebhookController do
     end
   end
 
-  defp send_response(conn, _webhook), do: send_resp(conn, 200, "")
+  defp send_response(conn, _webhook) do
+     send_resp(conn, 200, "")
+  end
 
   defp execute_response(conn, %{uid: uid, disabled: false} = webhook, count) do
     Endpoint.broadcast("webhooks:" <> uid, "event:new", build_payload(conn, count))

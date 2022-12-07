@@ -1,8 +1,9 @@
 defmodule Devhook.UsersTest do
   use Devhook.DataCase
 
+  import Devhook.Factory
+
   alias Devhook.Users
-  alias Ecto.UUID
 
   describe "users" do
     alias Devhook.Users.User
@@ -11,8 +12,7 @@ defmodule Devhook.UsersTest do
       auth0_xid: "some auth0_xid",
       email: "some email",
       first_name: "some first_name",
-      last_name: "some last_name",
-      uid: UUID.generate()
+      last_name: "some last_name"
     }
     @update_attrs %{
       auth0_xid: "some updated auth0_xid",
@@ -32,13 +32,13 @@ defmodule Devhook.UsersTest do
     end
 
     test "list_users/0 returns all users" do
-      user = user_fixture()
+      user = insert(:user)
       assert Users.list_users() == [user]
     end
 
     test "get_user!/1 returns the user with given id" do
-      user = user_fixture()
-      assert Users.get_user!(user.id) == user
+      user = insert(:user)
+      assert Users.get_user!(user.uid) == user
     end
 
     test "create_user/1 with valid data creates a user" do
@@ -54,7 +54,7 @@ defmodule Devhook.UsersTest do
     end
 
     test "update_user/2 with valid data updates the user" do
-      user = user_fixture()
+      user = insert(:user)
       assert {:ok, %User{} = user} = Users.update_user(user, @update_attrs)
       assert user.auth0_xid == "some updated auth0_xid"
       assert user.email == "some updated email"
@@ -63,19 +63,19 @@ defmodule Devhook.UsersTest do
     end
 
     test "update_user/2 with invalid data returns error changeset" do
-      user = user_fixture()
+      user = insert(:user)
       assert {:error, %Ecto.Changeset{}} = Users.update_user(user, @invalid_attrs)
-      assert user == Users.get_user!(user.id)
+      assert user == Users.get_user!(user.uid)
     end
 
     test "delete_user/1 deletes the user" do
-      user = user_fixture()
+      user = insert(:user)
       assert {:ok, %User{}} = Users.delete_user(user)
-      assert_raise Ecto.NoResultsError, fn -> Users.get_user!(user.id) end
+      assert_raise Ecto.NoResultsError, fn -> Users.get_user!(user.uid) end
     end
 
     test "change_user/1 returns a user changeset" do
-      user = user_fixture()
+      user = insert(:user)
       assert %Ecto.Changeset{} = Users.change_user(user)
     end
   end
